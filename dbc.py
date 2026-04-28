@@ -52,6 +52,33 @@ def h3_64ch_assy_325():
     
     return assy325_dataflow
 
+def h3_64ch_assy_325_2x():
+    """Dataflow for two single-shank 64-channel probes
+    
+    Need to figure out how to handle 'port' and 'shank' columns
+    """
+    # Choose the appropriate dataflow and copy it
+    dataflow0 = h3_64ch_assy_325()
+    dataflow0['shank_site'] = dataflow0['site'].copy()
+    dataflow1 = dataflow0.copy()
+
+    # Make the second one 64 channels higher
+    dataflow1['site'] += 64
+    dataflow1['Intan'] += 64
+    dataflow1['GUI'] += 64
+
+    # Label these shanks 'A' and 'B'
+    dataflow0['shank'] = 'A'
+    dataflow1['shank'] = 'B'    
+
+    # Label these ports 'A' and 'B' (although any two ports could have been used)
+    dataflow0['port'] = 'A'
+    dataflow1['port'] = 'B'
+    
+    # Concat and return
+    dataflow = pandas.concat([dataflow0, dataflow1], ignore_index=True)
+    return dataflow
+
 def h12_128ch_assy_350():
     """Return dataflow for Diagnostic Biochips 128-2
     
