@@ -43,6 +43,11 @@ def h3_64ch_assy_325():
 
     # Add depth
     assy325_dataflow['Z'] = assy325_dataflow['site'] * 20
+    
+    # Add geometry (consistent with wire64)
+    assy325_dataflow['xcoord'] = 0
+    assy325_dataflow['ycoord'] = assy325_dataflow['Z']
+    assy325_dataflow['kcoord'] = 0
 
     # Add GUI order, which is just 1 + Intan order
     assy325_dataflow['GUI'] = assy325_dataflow['Intan'] + 1
@@ -63,9 +68,11 @@ def h3_64ch_assy_325_2x():
     dataflow1 = dataflow0.copy()
 
     # Make the second one 64 channels higher
+    dataflow1['xcoord'] += 500
     dataflow1['site'] += 64
     dataflow1['Intan'] += 64
     dataflow1['GUI'] += 64
+    dataflow1['kcoord'] += 1
 
     # Label these shanks 'A' and 'B'
     dataflow0['shank'] = 'A'
@@ -123,6 +130,11 @@ def h12_128ch_assy_350():
 
     # Add depth
     assy350_dataflow['Z'] = assy350_dataflow['shank_site'] * 20
+
+    # Add geometry (consistent with wire64)
+    assy350_dataflow['xcoord'] = 0
+    assy350_dataflow['ycoord'] = assy350_dataflow['Z']
+    assy350_dataflow['kcoord'] = (assy350_dataflow['shank'] == 'B').astype(int)
 
     # Add GUI order, which is just 1 + Intan order
     assy350_dataflow['GUI'] = assy350_dataflow['Intan'] + 1
